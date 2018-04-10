@@ -14,7 +14,7 @@ DSP_INPUTS = OrderedDict([
     ('iq1', 6),
     ('iq2', 7),
     ('asg2', 3),
-    #('haze0', 3),
+    # ('haze0', 3),
     ('asg3', 4),
     #('haze1', 4),
     ('iq2_2', 14),
