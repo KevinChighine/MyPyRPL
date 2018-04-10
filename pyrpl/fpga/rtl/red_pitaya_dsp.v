@@ -1,22 +1,3 @@
-//////////////////////////////////////////////////////////////////////////////////
-// Company: Néel institut
-// Trainee: Kevin CHIGHINE
-//
-// Create Date: 22.03.2018
-// Design Name:
-// Module Name: red_pitaya_haze_block
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
-//////////////////////////////////////////////////////////////////////////////////
 /*
 ###############################################################################
 #    pyrpl - DSP servo controller for quantum optics with the RedPitaya
@@ -34,32 +15,32 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-###############################################################################
+############################################################################### 
 */
 /***********************************************************
 DSP Module
 This module hosts the different submodules used for digital signal processing.
 1)
 The first half of this file manages the connection between different submodules by
-implementing a bus between them:
-connecting the output_signal of submodule i to the input_signal of submodule j is
-done by setting the register
+implementing a bus between them: 
+connecting the output_signal of submodule i to the input_signal of submodule j is 
+done by setting the register 
 input_select[j] <= i;
-
+ 
 Similarly, a second, possibly different output is allowed for each module: output_direct.
 This output is added to the analog output 1 and/or 2 depending on the value
 of the register output_select: setting the first bit enables output1, the 2nd bit enables output 2.
 Example:
 output_select[i] = OUT2;
-By default, all routing is done as in the original redpitaya.
-2)
-The second half of this file defines the different submodules. For custom submodules,
-a good point to start is red_pitaya_pid_block.v.
+By default, all routing is done as in the original redpitaya. 
+2) 
+The second half of this file defines the different submodules. For custom submodules, 
+a good point to start is red_pitaya_pid_block.v. 
 Submodule i is assigned the address space
 0x40300000 + i*0x10000 + (0x0000 to 0xFFFF), that is 2**16 bytes.
-Addresses 0x403z00zz where z is an arbitrary hex character are reserved to manage
-the input/output routing of the submodule and are not forwarded, and therefore
-should not be used.
+Addresses 0x403z00zz where z is an arbitrary hex character are reserved to manage 
+the input/output routing of the submodule and are not forwarded, and therefore 
+should not be used.  
 *************************************************************/
 
 
