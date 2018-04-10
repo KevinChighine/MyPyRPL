@@ -3,9 +3,8 @@ from qtpy import QtCore
 from ..attributes import FloatProperty, BoolRegister, FloatRegister, GainRegister
 from ..modules import HardwareModule
 from . import FilterModule
-
 from ..pyrpl_utils import sorted_dict
-
+from .dsp import all_inputs, dsp_addr_base, InputSelectRegister
 from ..attributes import BoolRegister, FloatRegister, SelectRegister, \
     IntRegister, PhaseRegister, FrequencyRegister, FloatProperty, \
     FilterRegister, FilterProperty, GainRegister
@@ -13,13 +12,12 @@ from ..attributes import BoolRegister, FloatRegister, SelectRegister, \
 from pyqtgraph.Qt import QtGui, QtCore
 import pyqtgraph as pg
 from ..widgets.module_widgets import HazeWidget
-from .dsp import all_inputs, dsp_addr_base, InputSelectRegister
 
-
+#logger = logging.getLogger(name=__name__)
 
 class Haze(FilterModule, HardwareModule):
     addr_base = 0x40300000 + 3 * 0x10000
-    name = 'haze'
+
     _widget_class = HazeWidget
     _setup_attributes = ["input1",
                          "input2",

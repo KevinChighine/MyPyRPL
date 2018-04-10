@@ -14,9 +14,9 @@ DSP_INPUTS = OrderedDict([
     ('iq1', 6),
     ('iq2', 7),
     ('asg2', 3),
-    # ('haze0', 3),
+    #('haze0', 3),#same as asg2 by design
     ('asg3', 4),
-    #('haze1', 4),
+    #('haze1', 4),#same as asg3 by design
     ('iq2_2', 14),
     ('pid0', 0),
     ('pid1', 1),
