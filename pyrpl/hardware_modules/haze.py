@@ -15,8 +15,8 @@ from ..widgets.module_widgets import HazeWidget
 
 #logger = logging.getLogger(name=__name__)
 
-class Haze(FilterModule, HardwareModule):
-    addr_base = 0x40300000 + 3 * 0x10000
+class Haze1(FilterModule, HardwareModule):
+    addr_base=0x40330000
 
     _widget_class = HazeWidget
     _setup_attributes = ["input1",
@@ -50,12 +50,12 @@ class Haze(FilterModule, HardwareModule):
     def inputs(self):
         return list(all_inputs(self).keys())
 
-    input1 = InputSelectRegister(- addr_base + dsp_addr_base('asg2') + 0x0,
+    input1 = InputSelectRegister(-addr_base+dsp_addr_base('haze1')+0x0,
                                  options=all_inputs,
                                  default='in1',
                                  doc="selects the input signal 1 of the module")
 
-    input2 = InputSelectRegister(- addr_base + dsp_addr_base('asg3') + 0x0,
+    input2 = InputSelectRegister(-addr_base+dsp_addr_base('haze1')+0x10000,
                                  options=all_inputs,
                                  default='in2',
                                  doc="selects the input signal 2 of the module")

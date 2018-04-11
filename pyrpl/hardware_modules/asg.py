@@ -356,5 +356,5 @@ def make_asg(channel=0):
 
 Asg0 = make_asg(channel=0)
 Asg1 = make_asg(channel=1)
-Asg2 = make_asg(channel=2)
-Asg3 = make_asg(channel=3)
+#Asg2 = make_asg(channel=2)
+#Asg3 = make_asg(channel=3)
