@@ -1,3 +1,22 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Company: Néel institut
+// Trainee: Kevin CHIGHINE
+//
+// Create Date: 22.03.2018
+// Design Name:
+// Module Name: red_pitaya_haze_block
+// Project Name:
+// Target Devices:
+// Tool Versions:
+// Description:
+//
+// Dependencies:
+//
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+//
+//////////////////////////////////////////////////////////////////////////////////
 /*
 ###############################################################################
 #    pyrpl - DSP servo controller for quantum optics with the RedPitaya
@@ -15,32 +34,32 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-############################################################################### 
+###############################################################################
 */
 /***********************************************************
 DSP Module
 This module hosts the different submodules used for digital signal processing.
 1)
 The first half of this file manages the connection between different submodules by
-implementing a bus between them: 
-connecting the output_signal of submodule i to the input_signal of submodule j is 
-done by setting the register 
+implementing a bus between them:
+connecting the output_signal of submodule i to the input_signal of submodule j is
+done by setting the register
 input_select[j] <= i;
- 
+
 Similarly, a second, possibly different output is allowed for each module: output_direct.
 This output is added to the analog output 1 and/or 2 depending on the value
 of the register output_select: setting the first bit enables output1, the 2nd bit enables output 2.
 Example:
 output_select[i] = OUT2;
-By default, all routing is done as in the original redpitaya. 
-2) 
-The second half of this file defines the different submodules. For custom submodules, 
-a good point to start is red_pitaya_pid_block.v. 
+By default, all routing is done as in the original redpitaya.
+2)
+The second half of this file defines the different submodules. For custom submodules,
+a good point to start is red_pitaya_pid_block.v.
 Submodule i is assigned the address space
 0x40300000 + i*0x10000 + (0x0000 to 0xFFFF), that is 2**16 bytes.
-Addresses 0x403z00zz where z is an arbitrary hex character are reserved to manage 
-the input/output routing of the submodule and are not forwarded, and therefore 
-should not be used.  
+Addresses 0x403z00zz where z is an arbitrary hex character are reserved to manage
+the input/output routing of the submodule and are not forwarded, and therefore
+should not be used.
 *************************************************************/
 
 
@@ -60,10 +79,10 @@ module red_pitaya_dsp #(
    output     [ 14-1: 0] scope2_o,
    output     [ 14-1: 0] haze1_o,
    output     [ 14-1: 0] haze2_o,
+   input      [ 14-1: 0] haze1_i,
+   input      [ 14-1: 0] haze2_i,
    input      [ 14-1: 0] asg1_i,
    input      [ 14-1: 0] asg2_i,
-   input      [ 14-1: 0] asg3_i,
-   input      [ 14-1: 0] asg4_i,
    input      [ 14-1: 0] asg1phase_i,
 
    // pwm outputs
@@ -98,8 +117,6 @@ localparam PID2  = 'd2; //formerly PID21: input1->output2
 localparam PID3  = 'd3; //formerly PID22
 localparam HAZE1 = 'd3; //formerly PID22
 localparam HAZE2 = 'd4; //formerly PID22
-localparam ASG3 =  'd3; //formerly PID22
-localparam ASG4 =  'd4; //formerly PID22
 //localparam TRIG  = 'd3; //formerly PID3
 //localparam IIR   = 'd4; //IIR filter to connect in series to PID module
 localparam IQ0   = 'd5; //for PDH signal generation
@@ -157,10 +174,10 @@ assign scope2_o = input_signal[SCOPE2];
 assign haze1_o = input_signal[HAZE1];
 assign haze2_o = input_signal[HAZE2];
 
-assign output_signal[ASG3] = asg3_i;
-assign output_signal[ASG4] = asg4_i;
-assign output_direct[ASG3] = asg3_i;
-assign output_direct[ASG4] = asg4_i;
+assign output_signal[HAZE1] = haze1_i;
+assign output_signal[HAZE2] = haze2_i;
+assign output_direct[HAZE1] = haze1_i;
+assign output_direct[HAZE2] = haze2_i;
 
 //connect asg output
 assign output_signal[ASG1] = asg1_i;
@@ -261,8 +278,8 @@ always @(posedge clk_i) begin
 
       input_select [HAZE1] <= ADC1;
       input_select [HAZE2] <= ADC2;
-      output_select[ASG3] <= OFF;
-      output_select[ASG4] <= OFF;
+      output_select[HAZE1] <= OFF;
+      output_select[HAZE2] <= OFF;
 
       //input_select [IIR] <= ADC1;
       //output_select[IIR] <= OFF;
