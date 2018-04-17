@@ -23,8 +23,8 @@ class Haze1(FilterModule, HardwareModule):
                          "input2",
                          "p1",
                          "p2",
-                         "output_direct",
-                         "output_signal"]
+                         "output_direct"]
+                         #"output_signal"]
                          #"setpoint",
 
                          #"d",
@@ -41,9 +41,9 @@ class Haze1(FilterModule, HardwareModule):
         R=0)
 
 
-    output_signals = _output_signals.keys()
-    output_signal = SelectRegister(0x10C, options=_output_signals,
-                                   doc="Signal to send back to DSP multiplexer")
+    #output_signals = _output_signals.keys()
+    #output_signal = SelectRegister(0x10C, options=_output_signals,
+    #                               doc="Signal to send back to DSP multiplexer")
     @property
     # the function is here so the metaclass generates a setup(**kwds) function
 
