@@ -2,7 +2,7 @@ import numpy as np
 from qtpy import QtCore
 from ..attributes import FloatProperty, BoolRegister, FloatRegister, GainRegister
 from ..modules import HardwareModule
-from . import FilterModule
+from . import FilterModule, DspModule
 from ..pyrpl_utils import sorted_dict
 from .dsp import all_inputs, dsp_addr_base, InputSelectRegister
 from ..attributes import BoolRegister, FloatRegister, SelectRegister, \
@@ -14,7 +14,7 @@ import pyqtgraph as pg
 from ..widgets.module_widgets import HazeWidget
 
 
-class Haze(FilterModule, HardwareModule):
+class Haze(DspModule):
     addr_base=0x40330000
 
     _widget_class = HazeWidget
