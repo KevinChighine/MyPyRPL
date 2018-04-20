@@ -25,19 +25,18 @@ class Haze(DspModule):
                          "output_direct"]
                          #"output_signal"]
                          #"setpoint",
-
                          #"d",
                          #"inputfilter",
                          #"max_voltage",
                          #"min_voltage"]
     _gui_attributes = _setup_attributes
 
-    _output_signals = sorted_dict(
-        output_direct=1,
-        pfd=2,
-        off=3,
-        V=4,
-        R=0)
+ #   _output_signals = sorted_dict(
+ #       output_direct=1,
+ #       pfd=2,
+ #       off=3,
+ #       V=4,
+ #       R=0)
 
 
     #output_signals = _output_signals.keys()
@@ -49,12 +48,12 @@ class Haze(DspModule):
     def inputs(self):
         return list(all_inputs(self).keys())
 
-    input1 = InputSelectRegister(-addr_base+dsp_addr_base('haze')+0x0,
+    input1 = InputSelectRegister(-addr_base+dsp_addr_base('haze0')+0x0,
                                  options=all_inputs,
                                  default='in1',
                                  doc="selects the input signal 1 of the module")
 
-    input2 = InputSelectRegister(-addr_base+dsp_addr_base('haze')+0x10000,
+    input2 = InputSelectRegister(-addr_base+dsp_addr_base('haze1')+0x1000,
                                  options=all_inputs,
                                  default='in2',
                                  doc="selects the input signal 2 of the module")
