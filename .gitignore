@@ -123,3 +123,8 @@ scripts/build/
 scripts/__init__.py
 scripts/run_pyrpl.spec
 scripts/pyrpl.spec
+
+
+# test notebook
+test.ipynb
+test.ipynb_checkpoints
