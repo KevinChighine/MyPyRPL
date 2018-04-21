@@ -16,12 +16,15 @@ from ..widgets.module_widgets import HazeWidget
 
 class Haze(DspModule):
     addr_base=0x40330000
+    # trying a workaround..
+    
+    _rel_haze_addr_base = -addr_base + dsp_addr_base('haze0')
 
     _widget_class = HazeWidget
     _setup_attributes = ["input1",
                          "input2",
-                         "p1",
-                         "p2",
+                         #"p1",
+                         #"p2",
                          "output_direct"]
                          #"output_signal"]
                          #"setpoint",
@@ -42,18 +45,18 @@ class Haze(DspModule):
     #output_signals = _output_signals.keys()
     #output_signal = SelectRegister(0x10C, options=_output_signals,
     #                               doc="Signal to send back to DSP multiplexer")
-    @property
-    # the function is here so the metaclass generates a setup(**kwds) function
 
+    # the function is here so the metaclass generates a setup(**kwds) function
+    @property
     def inputs(self):
         return list(all_inputs(self).keys())
 
-    input1 = InputSelectRegister(-addr_base+dsp_addr_base('haze0')+0x0,
+    input1 = InputSelectRegister(_rel_haze_addr_base + 0x0, # this way of writing ensures that both haze modules get the same 
                                  options=all_inputs,
                                  default='in1',
                                  doc="selects the input signal 1 of the module")
 
-    input2 = InputSelectRegister(-addr_base+dsp_addr_base('haze1')+0x1000,
+    input2 = InputSelectRegister(_rel_haze_addr_base + 0x10000,
                                  options=all_inputs,
                                  default='in2',
                                  doc="selects the input signal 2 of the module")
@@ -66,7 +69,7 @@ class Haze(DspModule):
     #output_signal = SelectRegister(0x10C, options=_output_signals,
     #                doc="Signal to send back to DSP multiplexer")
 
-    p1 = GainRegister(0x108, bits=_GAINBITS, norm= 2 **_PSR,
+    p1 = GainRegister(_rel_haze_addr_base + 0x108, bits=_GAINBITS, norm= 2 **_PSR,
                       doc="Haze proportional gain [1]")
-    p2 = GainRegister(0x10C, bits=_GAINBITS, norm= 2 **_ISR,
+    p2 = GainRegister(_rel_haze_addr_base + 0x10C, bits=_GAINBITS, norm= 2 **_ISR,
                       doc="Haze proportional gain 2 [1]")
