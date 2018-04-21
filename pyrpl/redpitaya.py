@@ -62,8 +62,13 @@ defaultparameters = dict(
 
 
 class RedPitaya(object):
-    cls_modules = [rp.HK, rp.AMS, rp.Scope, rp.Haze, rp.Haze, rp.Sampler,  rp.Asg0, rp.Asg1] + \
-                  [rp.Pwm] * 2 + [rp.Iq] * 3 + [rp.Pid] * 3 #+ [rp.Haze] * 2#[rp.Trig] + [ rp.IIR]
+    cls_modules = [rp.HK, rp.AMS, rp.Scope,
+                   rp.Haze, # there is only one actual module of haze, by default haze0
+                   #rp.Haze, # and we want no second instance of haze with base_addr from haze1
+                   # (would cause bugs since there is no hardware equivalent behind, since haze0
+                   # already uses the resources of haze1)
+                   rp.Sampler,  rp.Asg0, rp.Asg1] + \
+                   [rp.Pwm] * 2 + [rp.Iq] * 3 + [rp.Pid] * 3 #+ [rp.Haze] * 2#[rp.Trig] + [ rp.IIR]
 
     def __init__(self, config=None,  # configfile is needed to store parameters. None simulates one
                  **kwargs):

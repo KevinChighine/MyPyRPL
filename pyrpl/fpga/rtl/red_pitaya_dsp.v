@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////////
-// Company: Néel institut
+// Company: Nï¿½el institut
 // Trainee: Kevin CHIGHINE
 //
 // Create Date: 22.03.2018
@@ -353,17 +353,24 @@ generate for (j = 0; j < 3; j = j+1) begin
    assign output_signal[j] = output_direct[j];
 end endgenerate
 
-/*
-// HAZE with two inputs
-generate for (j = 3; j < 5; j = j+1) begin
+
+// HAZE with two inputs, but only one module -> leaving out j=4 in module number, since its slots are connected to haze at j=3
+generate for (j = 3; j < 4; j = j+1) begin
     red_pitaya_haze_block i_haze
       (
          // data
          .clk_i        (  clk_i          ),  // clock
          .rstn_i       (  rstn_i         ),  // reset - active low
          .dat_i        (  input_signal [j] ),  // input data
-         .dat2_i       (  input_signal2 [j] ),  // input data
+         .dat2_i       (  input_signal2 [j+1] ),  // input data
          .dat_o        (  output_direct[j]),  // output data
+         // there is room for a second output_direct, but currently haze_block.v does not define such an output
+         //.dat2_o        (  output_direct[j+1]),  // output2 data
+
+         // there is room for two output_signal (to be shown on scope etc.),
+         // but currently haze_block.v does not define such an output
+         //.signal_o     (  output_signal[j]),  // output signal
+         //.signal2_o     (  output_signal[j+1]),  // output signal
 
          //communincation with PS
          .addr ( sys_addr[16-1:0] ),
@@ -374,8 +381,14 @@ generate for (j = 3; j < 5; j = j+1) begin
          .wdata (sys_wdata)
       );
 
+// if output_signal is not connected above, it should be connected here
+// (for clarity, read about the difference between output_signal and output_direct
+// in the comment at the top of this file)
+assign output_signal[j] = output_direct[j];
+assign output_signal[j+1] = output_direct[j+1];
+
 end endgenerate
-*/
+
 /*
 wire trig_signal;
 //TRIG
