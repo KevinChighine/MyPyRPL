@@ -362,7 +362,7 @@ generate for (j = 3; j < 4; j = j+1) begin
          .clk_i        (  clk_i          ),  // clock
          .rstn_i       (  rstn_i         ),  // reset - active low
          .dat_i        (  input_signal [j] ),  // input data
-         .dat2_i       (  input_signal2 [j+1] ),  // input data
+         .dat2_i       (  input_signal [j+1] ),  // input data
          .dat_o        (  output_direct[j]),  // output data
          // there is room for a second output_direct, but currently haze_block.v does not define such an output
          //.dat2_o        (  output_direct[j+1]),  // output2 data
