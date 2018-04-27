@@ -62,22 +62,23 @@ defaultparameters = dict(
 
 
 class RedPitaya(object):
-    cls_modules = [rp.HK, rp.AMS, rp.Scope, rp.Haze, rp.Haze, rp.Sampler,  rp.Asg0, rp.Asg1] + \
-                  [rp.Pwm] * 2 + [rp.Iq] * 3 + [rp.Pid] * 3 #+ [rp.Haze] * 2#[rp.Trig] + [ rp.IIR]
+    cls_modules = [rp.HK, rp.AMS, rp.Scope,
+                   rp.Haze, # there is only one actual module of haze, by default haze0
+                   #rp.Haze, # and we want no second instance of haze with base_addr from haze1
+                   # (would cause bugs since there is no hardware equivalent behind, since haze0
+                   # already uses the resources of haze1)
+                   rp.Sampler,  rp.Asg0, rp.Asg1] + \
+                   [rp.Pwm] * 2 + [rp.Iq] * 3 + [rp.Pid] * 3 #+ [rp.Haze] * 2#[rp.Trig] + [ rp.IIR]
 
     def __init__(self, config=None,  # configfile is needed to store parameters. None simulates one
                  **kwargs):
         """ this class provides the basic interface to the redpitaya board
-
         The constructor installs and starts the communication interface on the RedPitaya
         at 'hostname' that allows remote control and readout
-
         'config' is the config file or MemoryTree of the config file. All keyword arguments
         may be specified in the branch 'redpitaya' of this config file. Alternatively,
         they can be overwritten by keyword arguments at the function call.
-
         'config=None' specifies that no persistent config file is saved on the disc.
-
         Possible keyword arguments and their defaults are:
             hostname='192.168.1.100', # the ip or hostname of the board
             port=2222,  # port for PyRPL datacommunication
@@ -96,7 +97,6 @@ class RedPitaya(object):
             timeout=3,  # timeout in seconds for ssh communication
             monitor_server_name='monitor_server',  # name of the server program on redpitaya
             silence_env=False)  # suppress all environment variables that may override the configuration?
-
         if you are experiencing problems, try to increase delay, or try
         logging.getLogger().setLevel(logging.DEBUG)"""
         self.logger = logging.getLogger(name=__name__)
@@ -204,7 +204,6 @@ class RedPitaya(object):
     def start_ssh(self, attempt=0):
         """
         Extablishes an ssh connection to the RedPitaya board
-
         returns True if a successful connection has been established
         """
         try:
