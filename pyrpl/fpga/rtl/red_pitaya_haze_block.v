@@ -53,11 +53,12 @@ module red_pitaya_haze_block #(
    // data
    input                 clk_i           ,  // clock
    input                 rstn_i          ,  // reset - active low
-   //input      [ 14-1: 0] dat_i           ,  // input data
-   //input      [ 14-1: 0] dat2_i           ,  // input data
+   input      [ 14-1: 0] dat_i           ,  // input data
+   input      [ 14-1: 0] dat2_i           ,  // input data
    input      [ 14-1: 0] adc_a_i         ,  // ADC data CHA
    input      [ 14-1: 0] adc_b_i         ,  // ADC data CHB
    output     [ 14-1: 0] dat_o           ,  // output data
+   output     [ 14-1: 0] dat2_o           ,  // output data
 
    // communication with PS
    input      [ 16-1: 0] addr,
@@ -74,17 +75,13 @@ reg [ GAINBITS-1: 0] set_kp2;
 //  System bus connection
 always @(posedge clk_i) begin
    if (rstn_i == 1'b0) begin
-
       set_kp <= {GAINBITS{1'b0}};
       set_kp2 <= {GAINBITS{1'b0}};
-
    end
    else begin
       if (wen) begin
-
          if (addr==16'h108)   set_kp  <= wdata[GAINBITS-1:0];
          if (addr==16'h10C)   set_kp2  <= wdata[GAINBITS-1:0];
-
       end
 
 	  casez (addr)
@@ -100,7 +97,7 @@ always @(posedge clk_i) begin
    end
 end
 
-reg   [15+GAINBITS-PSR-1: 0] kp_reg        ;
+reg signed [ 14-1:0] kp_reg        ;
 wire  [15+GAINBITS-1: 0] kp_mult1       ;
 wire  [15+GAINBITS-1: 0] kp_mult2       ;
 
@@ -113,7 +110,8 @@ always @(posedge clk_i) begin
    end
 end
 
-assign kp_mult1 = $signed(adc_a_i) * $signed(set_kp);
-assign kp_mult2 = $signed(adc_b_i)* $signed(set_kp2);
-assign dat_o = $signed(kp_reg);
+assign kp_mult1 = $signed(dat_i) * $signed(set_kp);
+assign kp_mult2 = $signed(dat2_i)* $signed(set_kp2);
+assign dat_o = kp_reg;
+assign dat2_o = kp_reg;
 endmodule

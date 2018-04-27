@@ -1,22 +1,22 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: LKB 
+// Company: LKB
 // Engineer: Leonhard Neuhaus
-// 
+//
 // Create Date: 18.02.2016 11:42:49
-// Design Name: 
+// Design Name:
 // Module Name: red_pitaya_lpf_block
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
+// Project Name:
+// Target Devices:
+// Tool Versions:
+// Description:
+//
+// Dependencies:
+//
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//
 //////////////////////////////////////////////////////////////////////////////////
 /*
 ###############################################################################
@@ -35,7 +35,7 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-############################################################################### 
+###############################################################################
 */
 
 module red_pitaya_lpf_block
@@ -47,7 +47,7 @@ module red_pitaya_lpf_block
 (
     input clk_i,
     input rstn_i  ,
-    input [SHIFTBITS:0] shift, 
+    input [SHIFTBITS:0] shift,
     input filter_on,
     input highpass,
     input signed  [SIGNALBITS-1:0] signal_i,
@@ -88,7 +88,7 @@ module red_pitaya_lpf_block
    (x < 2**31) ? 31 : \
    (x <= 2**32) ? 32 : \
    -1
-   
+
 localparam MAXSHIFT = `CLOG2(125000000/MINBW);  // gives an effective limit of 10 MHz (divided by 4 pi)
 
 reg  signed [SIGNALBITS+MAXSHIFT-1:0]    y;
@@ -110,7 +110,7 @@ always @(posedge clk_i) begin
         y <= y + shifted_delta;
     end
 end
-  
+
 assign signal_o = (filter_on == 1'b0) ? signal_i : ( (highpass==1'b0) ? y_out : delta);
 
 endmodule
