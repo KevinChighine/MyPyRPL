@@ -114,8 +114,8 @@ end
 assign kp_mult1 = $signed(dat_i) * $signed(set_kp);
 assign kp_mult2 = $signed(dat2_i)* $signed(set_kp2);
 //assign dat_o = kp_mult1;
-assign dat_o = 14'h2000;
-assign dat2_o = 14'b10000000000000;
+assign dat_o = 14'h8191;
+assign dat2_o = 14'b01111111111111;
 //assign dat2_o = kp_mult2;
 
 endmodule
