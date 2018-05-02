@@ -58,7 +58,7 @@ module red_pitaya_haze_block #(
    input      [ 14-1: 0] adc_a_i         ,  // ADC data CHA
    input      [ 14-1: 0] adc_b_i         ,  // ADC data CHB
    output     [ 14-1: 0] dat_o           ,  // output data
-   output     [ 14-1: 0] dat2_o           ,  // output data
+   output     [ 14-1: 0] dat2_o          ,  // output data
 
 
    // communication with PS
@@ -115,7 +115,7 @@ assign kp_mult1 = $signed(dat_i) * $signed(set_kp);
 assign kp_mult2 = $signed(dat2_i)* $signed(set_kp2);
 //assign dat_o = kp_mult1;
 assign dat_o = 14'h2000;
-assign dat2_o = 14'h2000;
+assign dat2_o = 14'b10000000000000;
 //assign dat2_o = kp_mult2;
 
 endmodule
