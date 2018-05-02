@@ -22,8 +22,8 @@ class Haze(HardwareModule, SignalModule):  # same as DspModule
 
     _setup_attributes = ["input1",
                          "input2",
-                         #"p1",
-                         #"p2",
+                         "p1",
+                         "p2",
                          "output_direct1",
                          "output_direct2",
                          #"output_signal"
@@ -57,13 +57,11 @@ class Haze(HardwareModule, SignalModule):  # same as DspModule
 
     # multiplexer for internal output signal, yet to be implemented
     #_output_signals = sorted_dict(
-    #       output_direct1=1,
-    #       output_direct2=2,
-    #       pfd=2,
-    #       off=3,
-    #       V=4,
-    #       R=0
+    #       output_direct1=0,
+    #       output_direct2=1,
+    #       off=2,
     #       )
+
     #output_signals = _output_signals.keys()
     #output_signal = SelectRegister(0x10C, options=_output_signals,
     #                doc="Signal to send back to DSP multiplexer")
@@ -105,3 +103,4 @@ class Haze(HardwareModule, SignalModule):  # same as DspModule
     ##############################
     # end of copy-paste from DspModule
     ###############################3
+
