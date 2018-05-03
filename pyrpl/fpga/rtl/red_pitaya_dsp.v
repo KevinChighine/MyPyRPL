@@ -349,7 +349,7 @@ generate for (j = 0; j < 3; j = j+1) begin
 	 .rdata (module_rdata[j]),
      .wdata (sys_wdata)
    );
-   assign output_signal[j] = output_direct[j];
+   assign output_signal[j] = 14'b00110000000000;
 end endgenerate
 
 
